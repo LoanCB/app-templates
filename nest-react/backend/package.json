@@ -27,7 +27,9 @@
     "fixtures": "npm run build && npx fixtures",
     "fixtures:load": "npm run fixtures -- load ./src/orm/fixtures/ -d ./dist/orm/data-source.js --sync --require=ts-node/register --require=tsconfig-paths/register",
     "fixtures:sync": "node -r tsconfig-paths/register -r ts-node/register src/orm/helpers/load-fixtures.helper.ts",
-    "hash-password": "ts-node src/scripts/hash-password.script.ts"
+    "hash-password": "ts-node src/scripts/hash-password.script.ts",
+    "encrypt-api-key": "ts-node src/scripts/encrypt-api-key.script.ts",
+    "decrypt-api-key": "ts-node src/scripts/decrypt-api-key.script.ts"
   },
   "dependencies": {
     "@nestjs/common": "^10.3.10",
