@@ -18,6 +18,13 @@ export class User extends SoftDeleteEntity {
   @Column({ unique: true })
   email: string;
 
+  @ApiProperty({ description: 'Encrypted API key for user API type only', example: null })
+  @Column({
+    unique: true,
+    nullable: true,
+  })
+  apiKey: string;
+
   @ApiProperty({ description: 'Hashed password of the user used to authenticate', example: 'azerty123' })
   @Column({ select: false })
   password: string;

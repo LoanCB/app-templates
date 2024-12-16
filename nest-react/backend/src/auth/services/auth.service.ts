@@ -1,6 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
+import { User } from 'src/users/entities/users.entity';
 import { UsersService } from '../../users/services/users.service';
 
 @Injectable()
@@ -19,5 +20,14 @@ export class AuthService {
       };
     }
     throw new UnauthorizedException();
+  }
+
+  /**
+   * Validate if api key is related to a user
+   * @param apiKey - string
+   * @returns Promise<User | null>
+   */
+  async validateApiKey(apiKey: string): Promise<User | undefined> {
+    return this.usersService.findByApiKey(apiKey);
   }
 }

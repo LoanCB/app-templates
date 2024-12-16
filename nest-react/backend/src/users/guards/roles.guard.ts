@@ -30,6 +30,7 @@ export class RolesGuard implements CanActivate {
 
     const rolesHierarchy = {
       [RoleType.READ_ONLY]: [RoleType.READ_ONLY],
+      [RoleType.MANAGER]: [RoleType.MANAGER, RoleType.READ_ONLY],
     };
 
     return allowedRoles.some((allowedRole) => Object.values((rolesHierarchy as any)[userRole]).includes(allowedRole));

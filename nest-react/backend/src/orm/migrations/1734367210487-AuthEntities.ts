@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AuthEntities1734363684673 implements MigrationInterface {
-  name = 'AuthEntities1734363684673';
+export class AuthEntities1734367210487 implements MigrationInterface {
+  name = 'AuthEntities1734367210487';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
@@ -30,11 +30,13 @@ export class AuthEntities1734363684673 implements MigrationInterface {
                 "first_name" character varying NOT NULL,
                 "last_name" character varying NOT NULL,
                 "email" character varying NOT NULL,
+                "api_key" character varying,
                 "password" character varying NOT NULL,
                 "type" "public"."user_type_enum" NOT NULL DEFAULT 'INTERNAL',
                 "is_active" boolean NOT NULL DEFAULT true,
                 "role_id" integer,
                 CONSTRAINT "UQ_e12875dfb3b1d92d7d7c5377e22" UNIQUE ("email"),
+                CONSTRAINT "UQ_55518b11e5013893f3b9f074209" UNIQUE ("api_key"),
                 CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id")
             )
         `);

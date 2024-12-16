@@ -5,7 +5,8 @@ export type UserErrorCodes =
   | 'USER_NOT_FOUND'
   | 'ARCHIVE_HIMSELF'
   | 'FORBIDDEN'
-  | 'FORBIDDEN_EDIT_USER';
+  | 'FORBIDDEN_EDIT_USER'
+  | 'INVALID_API_KEY';
 
 export default (): { [key in UserErrorCodes]: string | DynamicMessage } => ({
   USER_EMAIL_ALREADY_EXISTS: 'User already exists',
@@ -13,4 +14,5 @@ export default (): { [key in UserErrorCodes]: string | DynamicMessage } => ({
   ARCHIVE_HIMSELF: 'User cannot archive himself',
   FORBIDDEN: "You haven't rights to access on this resource",
   FORBIDDEN_EDIT_USER: "You haven't rights to edit this user",
+  INVALID_API_KEY: 'Invalid api key',
 });

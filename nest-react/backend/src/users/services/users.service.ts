@@ -1,4 +1,5 @@
 import { HttpStatus, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
 import { PaginationParamsDto } from 'src/common/dto/pagination-params.dto';
@@ -6,12 +7,17 @@ import { CustomHttpException } from 'src/common/helpers/custom.exception';
 import { getEntityFilteredList } from 'src/common/helpers/filter-repository.helper';
 import { ErrorCodesService } from 'src/common/services/error-codes.service';
 import { EntityFilteredListResults } from 'src/common/types/filter-repository.types';
-import { Repository } from 'typeorm';
+import configurationConfig from 'src/config/configuration.config';
+import { Equal, Repository } from 'typeorm';
 import { CreateUserDto, FormattedCreatedUserDto } from '../dto/create-user.dto';
 import { PatchUserDto } from '../dto/patch-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
 import { Role } from '../entities/roles.entity';
 import { User } from '../entities/users.entity';
+import { decryptApiKey } from '../helpers/users-service.helper';
+import { UserType } from '../types/user-type';
+
+const configService = new ConfigService(configurationConfig());
 
 @Injectable()
 export class UsersService {
@@ -137,5 +143,13 @@ export class UsersService {
 
     const otherUser = await this.usersRepository.findOne({ where: { email } });
     return otherUser ? true : false;
+  }
+
+  async findByApiKey(apiKey: string) {
+    const users = await this.usersRepository.find({
+      where: { type: Equal(UserType.API) },
+      relations: { role: true },
+    });
+    return users.find((user) => decryptApiKey(user.apiKey, configService.get('secret')!) === apiKey);
   }
 }

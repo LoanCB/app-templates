@@ -44,6 +44,7 @@ async function bootstrap() {
     )
     .setVersion(configService.get('image_tag') || 'Set IMAGE_TAG env var')
     .addBearerAuth({ type: 'http', name: 'access_token', description: 'Set access token' })
+    .addApiKey({ type: 'apiKey', name: 'x-api-key', in: 'header' }, 'x-api-key')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
