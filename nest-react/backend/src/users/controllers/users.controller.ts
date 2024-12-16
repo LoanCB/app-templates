@@ -103,7 +103,7 @@ export class UsersController {
       );
     }
 
-    if (loggedUser.role.name !== RoleType.ADMINISTRATOR) {
+    if (loggedUser.role.type !== RoleType.ADMINISTRATOR) {
       if (user.id !== loggedUser.id) {
         throw new CustomHttpException('FORBIDDEN_EDIT_USER', HttpStatus.FORBIDDEN);
       } else {

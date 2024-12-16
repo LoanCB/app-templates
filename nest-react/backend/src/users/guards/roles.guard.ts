@@ -20,7 +20,7 @@ export class RolesGuard implements CanActivate {
       return false;
     }
 
-    return this.matchRoles(allowedRoles, user.role.name.toUpperCase());
+    return this.matchRoles(allowedRoles, user.role.type.toUpperCase());
   }
 
   matchRoles(allowedRoles: string[], userRole: string) {

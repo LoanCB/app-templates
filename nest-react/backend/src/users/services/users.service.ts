@@ -31,7 +31,7 @@ export class UsersService {
     }
 
     // Find related role
-    const role = await this.rolesRepository.findOne({ where: { name: createUserDto.role } });
+    const role = await this.rolesRepository.findOne({ where: { type: createUserDto.role } });
 
     // Hash password
     const hashedPassword = await hash(createUserDto.password, 10);
@@ -79,7 +79,7 @@ export class UsersService {
 
     if (updateUserDto.role) {
       // Get user role
-      const role = await this.rolesRepository.findOne({ where: { name: updateUserDto.role } });
+      const role = await this.rolesRepository.findOne({ where: { type: updateUserDto.role } });
       if (role) {
         user.role = role;
       }

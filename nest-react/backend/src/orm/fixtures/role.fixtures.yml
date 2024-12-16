@@ -8,3 +8,7 @@ items:
     title: Lecture uniquement
     name: 'READ_ONLY'
     description: Rôle dédié uniquement à la consultation de ressources
+  role_3:
+    title: Manager
+    name: 'MANAGER'
+    description: Rôle dédié à la gestion de certains services
