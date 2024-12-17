@@ -5,7 +5,6 @@ import { hash } from 'bcrypt';
 import { PaginationParamsDto } from 'src/common/dto/pagination-params.dto';
 import { CustomHttpException } from 'src/common/helpers/custom.exception';
 import { getEntityFilteredList } from 'src/common/helpers/filter-repository.helper';
-import { ErrorCodesService } from 'src/common/services/error-codes.service';
 import { EntityFilteredListResults } from 'src/common/types/filter-repository.types';
 import configurationConfig from 'src/config/configuration.config';
 import { Equal, Repository } from 'typeorm';
@@ -26,8 +25,6 @@ export class UsersService {
 
   @InjectRepository(Role)
   rolesRepository: Repository<Role>;
-
-  constructor(private errorCodesService: ErrorCodesService) {}
 
   async create(createUserDto: CreateUserDto) {
     // Check if user already exist
@@ -105,11 +102,7 @@ export class UsersService {
   async softDelete(id: number, patchUserDto: PatchUserDto) {
     const user = this.findOneById(id);
     if (!user) {
-      throw new CustomHttpException(
-        'USER_NOT_FOUND',
-        HttpStatus.NOT_FOUND,
-        this.errorCodesService.get('USER_NOT_FOUND', id),
-      );
+      throw new CustomHttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND, { id });
     }
 
     return patchUserDto.isActive ? await this.activateUser(+id) : await this.deactivateUser(+id);

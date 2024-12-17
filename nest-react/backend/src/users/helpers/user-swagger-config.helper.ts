@@ -21,7 +21,7 @@ export class UserConfigSwagger {
     'User not found',
     404,
     'USER_NOT_FOUND',
-    '{ID}',
+    '{id}',
   );
 
   static USER_MULTIPLE_BAD_REQUEST = (): ApiResponseOptions => {

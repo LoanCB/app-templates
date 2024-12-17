@@ -11,7 +11,7 @@ export const genericSwaggerErrorResponse = (
   dynamicErrorValue?: string | number,
 ): ApiResponseOptions => {
   const exampleMessage = dynamicErrorValue
-    ? (errorsConfig()[errorCode] as DynamicMessage)(dynamicErrorValue)
+    ? (errorsConfig()[errorCode] as DynamicMessage)({ dynamicErrorValue })
     : errorsConfig()[errorCode];
 
   const properties = {
