@@ -52,7 +52,7 @@ export class UsersController {
   @SwaggerUserCreate()
   async create(@Body() createUserDto: CreateUserDto) {
     const createdUser = await this.usersService.create(createUserDto);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     const { password, ...rest } = createdUser;
     return rest;
   }
@@ -71,7 +71,7 @@ export class UsersController {
   async findOne(@Param('id', ParseIntPipe) id: number) {
     try {
       return await this.usersService.findOneById(id);
-    } catch (error) {
+    } catch {
       throw new CustomHttpException('USER_NOT_FOUND', HttpStatus.NOT_FOUND, { id });
     }
   }

@@ -93,7 +93,6 @@ export class UsersService {
       updateUserDto.password = await hash(updateUserDto.password, 10);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { ['role']: _, ...dto } = updateUserDto;
     Object.assign(user, dto);
     return await this.usersRepository.save(user);

@@ -42,7 +42,8 @@ export class AuthEntities1734367210487 implements MigrationInterface {
         `);
     await queryRunner.query(`
             ALTER TABLE "user"
-            ADD CONSTRAINT "FK_fb2e442d14add3cefbdf33c4561" FOREIGN KEY ("role_id") REFERENCES "role"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            ADD CONSTRAINT "FK_fb2e442d14add3cefbdf33c4561 "
+            FOREIGN KEY ("role_id") REFERENCES "role"("id") ON DELETE NO ACTION ON UPDATE NO ACTION
         `);
   }
 
