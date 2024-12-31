@@ -12,8 +12,8 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const user = (getState() as RootState).user;
 
-    if (user?.token) {
-      headers.set("Authorization", `Bearer ${user.token}`);
+    if (user?.accessToken) {
+      headers.set("Authorization", `Bearer ${user.accessToken}`);
     }
 
     return headers;
