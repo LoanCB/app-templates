@@ -56,6 +56,7 @@ async function bootstrap() {
 
   await app.listen(PORT);
 
+  Logger.log(`💾 Database name : ${configService.get('database.name')}`);
   Logger.log(`🚀 ${projectName} is running on: http://localhost:${PORT}/${APP_ROUTE_PREFIX}`);
 }
 bootstrap();
