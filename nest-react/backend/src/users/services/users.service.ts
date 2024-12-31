@@ -62,7 +62,14 @@ export class UsersService {
     return await this.usersRepository.findOneOrFail({
       where: { email },
       relations: { role: true },
-      select: ['id', 'email', 'password'],
+      select: {
+        role: { id: true, title: true, type: true },
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        password: true,
+      },
     });
   }
 
