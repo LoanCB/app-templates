@@ -5,6 +5,11 @@ export enum UserType {
   API = "API",
 }
 
+export interface LoggedUser {
+  accessToken: string;
+  user: Omit<User, "accessToken">;
+}
+
 export interface User {
   id: number;
   firstName: string;
