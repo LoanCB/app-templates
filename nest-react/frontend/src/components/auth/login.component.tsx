@@ -1,28 +1,32 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Box, Button, Typography } from "@mui/material";
 import BackgroundImage from "@src/assets/background.jpg";
 import { useLoginUserMutation } from "@src/store/api/auth-api";
 import { useAppDispatch } from "@src/store/hooks";
 import { openSnackBar } from "@src/store/notification-slice";
 import { removeUser, setUser } from "@src/store/user-slice";
-import React, { useState } from "react";
+import { LoginFormData, LoginSchema } from "@src/utils/auth/login.schema";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import CustomFormField from "../common/custom-form-field/custom-form-field.component";
 import Notification from "../common/notification.component";
 
 const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const { control, handleSubmit } = useForm<LoginFormData>({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
   const [loginUser] = useLoginUserMutation();
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const { data, error } = await loginUser({
-      email,
-      password,
-    });
+  const handleFormSubmit = async (formData: LoginFormData) => {
+    const { data, error } = await loginUser(formData);
 
     if (error) {
       dispatch(
@@ -64,7 +68,7 @@ const Login = () => {
           Login
         </Typography>
         <form
-          onSubmit={(event) => handleSubmit(event)}
+          onSubmit={handleSubmit((data) => handleFormSubmit(data))}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -72,19 +76,18 @@ const Login = () => {
             minWidth: 400,
           }}
         >
-          <TextField
-            label="Email"
-            type="email"
-            required
-            fullWidth
-            onChange={(event) => setEmail(event.target.value)}
+          <CustomFormField
+            control={control}
+            controlName="email"
+            type="TEXT_FIELD"
+            options={{ label: "Email" }}
           />
-          <TextField
-            label="Mot de passe"
-            type="password"
-            required
-            fullWidth
-            onChange={(event) => setPassword(event.target.value)}
+          <CustomFormField
+            control={control}
+            controlName="password"
+            type="TEXT_FIELD"
+            options={{ label: "Mot de passe" }}
+            props={{ type: "password" }}
           />
           <Button type="submit" variant="contained">
             Se connecter

@@ -32,12 +32,7 @@ export interface CustomFormFieldProps {
     | FileField;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   props?: { [key: string]: any };
-  childrenComponentType:
-    | "TEXT_FIELD"
-    | "CHECKBOX"
-    | "SELECT"
-    | "AUTOCOMPLETE"
-    | "FILE_FIELD";
+  type: "TEXT_FIELD" | "CHECKBOX" | "SELECT" | "AUTOCOMPLETE" | "FILE_FIELD";
   label?: string | React.ReactNode;
 }
 
@@ -45,7 +40,7 @@ const CustomFormField = ({
   control,
   controlName,
   options,
-  childrenComponentType,
+  type,
   props,
 }: CustomFormFieldProps) => {
   options.fieldId = controlName;
@@ -53,7 +48,7 @@ const CustomFormField = ({
     field: ControllerRenderProps<FieldValues, string>,
     fieldState: ControllerFieldState
   ) => {
-    switch (childrenComponentType) {
+    switch (type) {
       case "TEXT_FIELD": {
         const opts = options as SimpleField;
         return CustomTextField(field, fieldState, opts, props || {});
