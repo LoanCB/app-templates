@@ -58,8 +58,8 @@ export class UsersService {
     return [users, users.length, totalResults];
   }
 
-  async findOneByEmail(email: string): Promise<User | undefined> {
-    return await this.usersRepository.findOneOrFail({
+  async findOneByEmail(email: string): Promise<User | null> {
+    return await this.usersRepository.findOne({
       where: { email },
       relations: { role: true },
       select: {

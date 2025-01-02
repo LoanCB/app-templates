@@ -5,6 +5,13 @@ interface Details {
   [key: string]: string | number;
 }
 
+export interface CustomHttpExceptionResponse {
+  statusCode: number;
+  errorCode: ErrorCode;
+  message: string;
+  details?: Details;
+}
+
 export class CustomHttpException extends HttpException {
   private readonly _errorCode: ErrorCode;
   private readonly _details: Details;

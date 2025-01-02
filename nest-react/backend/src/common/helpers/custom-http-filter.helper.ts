@@ -2,7 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { Response } from 'express';
 import _ from 'lodash';
 import { ErrorCodesService } from '../services/error-codes.service';
-import { CustomHttpException } from './custom.exception';
+import { CustomHttpException, CustomHttpExceptionResponse } from './custom.exception';
 
 @Catch(CustomHttpException)
 export class CustomHttpExceptionFilter implements ExceptionFilter {
@@ -12,16 +12,21 @@ export class CustomHttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
-    const details = exception.details;
+    const details = _.isEmpty(exception.details) ? null : exception.details;
     const message = _.isEmpty(details)
       ? this.errorCodesService.get(exception.errorCode)
       : this.errorCodesService.get(exception.errorCode, details);
 
-    response.status(status).json({
+    const responseBody: CustomHttpExceptionResponse = {
       statusCode: status,
       errorCode: exception.errorCode,
       message,
-      details,
-    });
+    };
+
+    if (details) {
+      responseBody.details = details;
+    }
+
+    response.status(status).json(responseBody);
   }
 }

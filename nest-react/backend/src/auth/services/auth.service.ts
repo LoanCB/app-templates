@@ -1,6 +1,7 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
+import { CustomHttpException } from 'src/common/helpers/custom.exception';
 import { User } from 'src/users/entities/users.entity';
 import { UsersService } from '../../users/services/users.service';
 import { ReturnUser } from '../types/return-user.types';
@@ -22,7 +23,7 @@ export class AuthService {
         user: returnUser,
       };
     }
-    throw new UnauthorizedException();
+    throw new CustomHttpException('INVALID_CREDENTIALS', HttpStatus.BAD_REQUEST);
   }
 
   /**
